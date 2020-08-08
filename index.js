@@ -14,11 +14,24 @@ app.set(`views`, `views`);
 app.use(express.static(`public`));
 
 app.get(`/`, (req, res) => {
-  res.render(`main`);
+  res.render(`main`, {
+    title: `Main page`,
+    isActiveMain: true,
+  });
 });
 
-app.get(`/about`, (req, res) => {
-  res.render(`about`);
+app.get(`/courses`, (req, res) => {
+  res.render(`courses`, {
+    title: `Courses catalog`,
+    isActiveCourses: true,
+  });
+});
+
+app.get(`/add`, (req, res) => {
+  res.render(`add`, {
+    title: `Add course`,
+    isActiveAdd: true,
+  });
 });
 
 const PORT = process.env.PORT || 3000;
