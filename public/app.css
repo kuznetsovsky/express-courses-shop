@@ -1,7 +1,15 @@
-.price {
+.card .card-content .price {
   font-size: 1.5rem;
 }
 
 .card .card-content .course-block-link {
   margin-top: 0.5em;
+}
+
+.course {
+  text-align: center;
+}
+
+.course .price.big {
+  font-size: 2.7rem;
 }
