@@ -23,8 +23,14 @@
         <span class="helper-text" data-error="wrong url"></span>
       </div>
     </div>
-    <button class="btn waves-effect waves-light" type="submit" name="action">Edit course
+    <button class="btn waves-effect waves-light" type="submit">Edit course
     </button>
     <input hidden type="text" name="_id" value="{{course._id}}">
+  </form>
+</div>
+<div class="row">
+  <form action="/courses/remove" method="POST" class="col s12">
+    <input hidden type="text" name="_id" value="{{course._id}}">
+    <button class="btn red darken-3" type="submit">Remove course
   </form>
 </div>
