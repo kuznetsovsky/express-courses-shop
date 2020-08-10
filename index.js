@@ -1,4 +1,5 @@
 const path = require(`path`);
+const mongoose = require('mongoose');
 const express = require(`express`);
 const exphbs = require(`express-handlebars`);
 const app = express();
@@ -18,15 +19,28 @@ app.set(`view engine`, `hbs`);
 app.set(`views`, `views`);
 
 app.use(express.static(path.join(__dirname, `public`)));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(`/`, mainRoute);
 app.use(`/courses`, coursesRoute);
 app.use(`/add`, addRoute);
 app.use(`/card`, cardRoute);
 
-const PORT = process.env.PORT || 3000;
+const start = async () => {
+  try {
+    const PORT = process.env.PORT || 3000;
+    const URL = `mongodb+srv://comebas:gLlBIWOQqHqHC770@cluster0.gl3ie.mongodb.net/<dbname>?retryWrites=true&w=majority`;
+    mongoose.connect(URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+start();
