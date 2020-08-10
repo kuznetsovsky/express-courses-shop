@@ -35,6 +35,30 @@ class Card {
     });
   }
 
+  static async remove(id) {
+    const card = await Card.fetch();
+    const index = card.courses.findIndex((it) => it._id === id);
+    const course = card.courses[index];
+
+    if (course.count === 1) {
+      card.courses = card.courses.filter((it) => it._id !== id);
+    } else {
+      card.courses[index].count--;
+    }
+
+    card.totalPrice -= course.price;
+    
+    return new Promise((resolve, reject) => {
+      fs.writeFile(_path, JSON.stringify(card), (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(card);
+        }
+      });
+    });
+  }
+
   static async fetch() {
     return new Promise((resolve, reject) => {
       fs.readFile(_path, `utf-8`, (err, content) => {

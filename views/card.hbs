@@ -1,31 +1,32 @@
 <h1>Basket of goods</h1>
+<div id="card">
+  {{#if courses.length}}
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Action</th>
+      </tr>
+    </thead>
 
-{{#if courses.length}}
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    {{#each courses}}
-    <tr>
-      <td>{{title}}</td>
-      <td>{{count}}</td>
-      <td>
-        <button class="waves-effect waves-light btn-small">Delete</button>
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
-<p class="basket right-align">
-  <strong>Total price:</strong>
-  <span class="price">{{totalPrice}}</span>
-</p>
-{{else}}
-<p>There are no items in your cart.</p>
-{{/if}}
+    <tbody>
+      {{#each courses}}
+      <tr>
+        <td>{{title}}</td>
+        <td>{{count}}</td>
+        <td>
+          <button class="waves-effect waves-light btn-small js-course-remove" data-course-id="{{_id}}">Delete</button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <p class="basket right-align">
+    <strong>Total price:</strong>
+    <span class="price">{{totalPrice}}</span>
+  </p>
+  {{else}}
+  <p>There are no items in your cart.</p>
+  {{/if}}
+</div>
