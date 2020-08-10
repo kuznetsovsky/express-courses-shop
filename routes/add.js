@@ -15,8 +15,9 @@ router.post(`/`, async (req, res) => {
     title: req.body[`course-name`],
     price: req.body[`course-price`],
     imageUrl: req.body[`course-image-url`],
+    userId: req.user,
   });    
-    
+  
   try {
     await course.save();
     res.redirect(`/courses`);
