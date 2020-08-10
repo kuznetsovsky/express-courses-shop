@@ -29,10 +29,11 @@ app.use(`/card`, cardRoute);
 const start = async () => {
   try {
     const PORT = process.env.PORT || 3000;
-    const URL = `mongodb+srv://comebas:gLlBIWOQqHqHC770@cluster0.gl3ie.mongodb.net/<dbname>?retryWrites=true&w=majority`;
+    const URL = `mongodb+srv://comebas:gLlBIWOQqHqHC770@cluster0.gl3ie.mongodb.net/courseshop`;
     mongoose.connect(URL, {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      useFindAndModify: false
     });
 
     app.listen(PORT, () => {

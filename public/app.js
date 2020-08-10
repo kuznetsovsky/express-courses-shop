@@ -8,7 +8,7 @@ const toCurrency = (price) => {
 }
 
 document.querySelectorAll(`.price`).forEach((it) => {
-  it.textContent = toCurrency(node.textContent);
+  it.textContent = toCurrency(it.textContent);
 });
 
 if (cardNode) {
