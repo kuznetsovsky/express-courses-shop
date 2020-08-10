@@ -9,7 +9,7 @@ router.get(`/`, async (req, res) => {
   res.render(`card`, {
     title: `Basket of goods`,
     courses: card.courses,
-    price: card.price,
+    totalPrice: card.totalPrice,
   });
 });
 
