@@ -17,6 +17,12 @@
         <p class="course-block-link">
           <a class="orange-text" href="/courses/{{_id}}/edit?allow=true">Edit course</a>
         </p>
+        <p class="course-block-link">
+        <form action="/card/add" method="POST">
+          <input type="hidden" name="_id" value="{{_id}}">
+          <button type="submit" class="waves-effect waves-light btn-small">Add to card</button>
+        </form>
+        </p>
       </div>
     </div>
   </div>
