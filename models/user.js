@@ -37,7 +37,20 @@ userSchema.methods.addToCart = function(course) {
   }
 
   this.cart = {items};
+  return this.save();
+}
 
+userSchema.methods.removeCartItems = function(id) {
+  let items = [...this.cart.items];
+  const index = items.findIndex((it) => it.courseId.toString() === id.toString());
+
+  if (items[index].count === 1) {
+    items = items.filter((it) => it.courseId.toString() !== id.toString());
+  } else {
+    items[index].count--;
+  }
+
+  this.cart = {items};
   return this.save();
 }
 
