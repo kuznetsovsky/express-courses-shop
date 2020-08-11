@@ -8,6 +8,7 @@ const mainRoute = require(`./routes/main`);
 const coursesRoute = require(`./routes/courses`);
 const addRoute = require(`./routes/add`);
 const cardRoute = require(`./routes/card`);
+const ordersRoute = require(`./routes/orders`);
 
 const UserModel = require(`./models/user`);
 
@@ -37,6 +38,7 @@ app.use(`/`, mainRoute);
 app.use(`/courses`, coursesRoute);
 app.use(`/add`, addRoute);
 app.use(`/card`, cardRoute);
+app.use(`/orders`, ordersRoute);
 
 const start = async () => {
   try {
