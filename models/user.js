@@ -21,4 +21,24 @@ const userSchema = new Schema({
   }
 });
 
+userSchema.methods.addToCart = function(course) {
+  const items = [...this.cart.items];
+  const index = items.findIndex((it) => {
+    return it.courseId.toString() === course._id.toString();
+  });
+
+  if (index >= 0) {
+    items[index].count = items[index].count + 1;
+  } else {
+    items.push({
+      courseId: course._id,
+      count: 1,
+    });
+  }
+
+  this.cart = {items};
+
+  return this.save();
+}
+
 module.exports = model(`User`, userSchema);
