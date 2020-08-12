@@ -21,6 +21,7 @@
         <p class="course-block-link">
           <form action="/card/add" method="POST">
             <input type="hidden" name="_id" value="{{_id}}">
+            <input type="hidden" name="_csrf" value="{{@root.csrf}}">
             <button type="submit" class="waves-effect waves-light btn-small">Add to card</button>
           </form>
         </p>

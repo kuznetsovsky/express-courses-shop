@@ -30,9 +30,13 @@ if (cardNode) {
   cardNode.addEventListener(`click`, (event) => {
     if (event.target.classList.contains(`js-course-remove`)) {
       const id = event.target.dataset.courseId;
+      const csrf = event.target.dataset.csrf;
 
       fetch(`/card/remove/${id}`, {
-        method: `delete`
+        method: `delete`,
+        headers:{
+          'X-XSRF-TOKEN': csrf,
+        }
       }).then((res) => res.json())
         .then((card) => {
           if (card.courses.length) {
@@ -42,7 +46,11 @@ if (cardNode) {
                   <td>${it.title}</td>
                   <td>${it.count}</td>
                   <td>
-                    <button class="waves-effect waves-light btn-small js-course-remove" data-course-id="${it._id}">Delete</button>
+                    <button 
+                      class="waves-effect waves-light btn-small js-course-remove" 
+                      data-course-id="${it._id}"
+                      data-csrf="${csrf}"
+                    >Delete</button>
                   </td>
                 </tr>
               `;

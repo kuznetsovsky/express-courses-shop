@@ -16,7 +16,11 @@
         <td>{{title}}</td>
         <td>{{count}}</td>
         <td>
-          <button class="waves-effect waves-light btn-small js-course-remove" data-course-id="{{_id}}">Delete</button>
+          <button 
+            class="waves-effect waves-light btn-small js-course-remove" 
+            data-course-id="{{_id}}"
+            data-csrf="{{@root.csrf}}"
+          >Delete</button>
         </td>
       </tr>
       {{/each}}
@@ -28,6 +32,7 @@
   </p>
   <p>
   <form action="/orders" method="POST">
+    <input type="hidden" name="_csrf" value="{{csrf}}">
     <button class="btn btn-small">Make an order</button>
   </form>
   </p>

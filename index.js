@@ -6,6 +6,7 @@ const session = require(`express-session`);
 const MongoStore = require(`connect-mongodb-session`)(session);
 const express = require(`express`);
 const exphbs = require(`express-handlebars`);
+const csurf = require(`csurf`);
 const app = express();
 
 const mainRoute = require(`./routes/main`);
@@ -44,6 +45,7 @@ app.use(session({
   store,
 }));
 
+app.use(csurf());
 app.use(varMiddleware);
 app.use(userMiddleware);
 

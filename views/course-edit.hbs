@@ -25,12 +25,14 @@
     </div>
     <button class="btn waves-effect waves-light" type="submit">Edit course
     </button>
+    <input type="hidden" name="_csrf" value="{{csrf}}">
     <input hidden type="text" name="_id" value="{{course._id}}">
   </form>
 </div>
 <div class="row">
   <form action="/courses/remove" method="POST" class="col s12">
     <input hidden type="text" name="_id" value="{{course._id}}">
+    <input type="hidden" name="_csrf" value="{{csrf}}">
     <button class="btn red darken-3" type="submit">Remove course
   </form>
 </div>
