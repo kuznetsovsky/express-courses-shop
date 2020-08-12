@@ -1,6 +1,9 @@
+const MONGODB_URI = `mongodb+srv://comebas:gLlBIWOQqHqHC770@cluster0.gl3ie.mongodb.net/courseshop`;
+
 const path = require(`path`);
 const mongoose = require('mongoose');
 const session = require(`express-session`);
+const MongoStore = require(`connect-mongodb-session`)(session);
 const express = require(`express`);
 const exphbs = require(`express-handlebars`);
 const app = express();
@@ -21,20 +24,15 @@ const hbs = exphbs.create({
   extname: `hbs`,
 });
 
+const store = new MongoStore({
+  collection: `sessions`,
+  uri: MONGODB_URI,
+});
+
 app.engine(`hbs`, hbs.engine);
 
 app.set(`view engine`, `hbs`);
 app.set(`views`, `views`);
-
-app.use(async (req, res, next) => {
-  try {
-    const user = await UserModel.findById(`5f3147c001c738275d1ede44`);
-    req.user = user;
-    next();
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.urlencoded({ extended: true }));
@@ -42,6 +40,7 @@ app.use(session({
   secret: `some secret value`,
   resave: false,
   saveUninitialized: false,
+  store,
 }));
 
 app.use(varMiddleware);
@@ -56,24 +55,23 @@ app.use(`/auth`, authRoute);
 const start = async () => {
   try {
     const PORT = process.env.PORT || 3000;
-    const URL = `mongodb+srv://comebas:gLlBIWOQqHqHC770@cluster0.gl3ie.mongodb.net/courseshop`;
-    mongoose.connect(URL, {
+    mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false
     });
 
-    const candidate = await UserModel.findOne();
+    // const candidate = await UserModel.findOne();
 
-    if (!candidate) {
-      const user = UserModel({
-        email: `example@mail.com`,
-        name: `ExampleUserName`,
-        cart: { items: [] },
-      });
+    // if (!candidate) {
+    //   const user = UserModel({
+    //     email: `example@mail.com`,
+    //     name: `ExampleUserName`,
+    //     cart: { items: [] },
+    //   });
 
-      await user.save();
-    }
+    //   await user.save();
+    // }
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
