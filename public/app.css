@@ -17,3 +17,12 @@
 .basket .price {
   font-size: 1.5em;
 }
+
+.auth {
+  padding-top: 3rem;
+}
+
+.auth .wrapper {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
