@@ -30,7 +30,24 @@ router.get(`/logout`, async (req, res) => {
 
 
 router.post(`/register`, async (req, res) => {
+  try {
+    const {email, password, repeat, name} = req.body;
+    const candidate = await UserModel.findOne({email});
 
+    if (candidate) {
+      res.redirect(`/auth/login#register`);
+    } else {
+      const user = new UserModel({
+        email, name, password, cart: {items: []}
+      });
+      await user.save();
+      res.redirect(`/auth/login#login`);
+    }
+
+
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 module.exports = router;

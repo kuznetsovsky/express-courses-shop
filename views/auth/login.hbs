@@ -36,6 +36,13 @@
         <form action="/auth/register" method="POST" class="col s12">
           <div class="row">
             <div class="input-field col s12">
+              <input id="name" name="name" type="text" class="validate" required>
+              <label for="name">Name</label>
+              <span class="helper-text" data-error="name is incorrect"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
               <input id="reg-email" name="email" type="email" class="validate" required>
               <label for="reg-email">Email</label>
               <span class="helper-text" data-error="email is not correct"></span>
@@ -50,7 +57,7 @@
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input id="confirm-password" name="password" type="password" class="validate" required>
+              <input id="confirm-password" name="confirm-password" type="password" class="validate" required>
               <label for="confirm-password">Confirm password</label>
               <span class="helper-text" data-error="password is incorrect"></span>
             </div>
