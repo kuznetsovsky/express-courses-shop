@@ -18,6 +18,7 @@ const authRoute = require(`./routes/auth`);
 const UserModel = require(`./models/user`);
 
 const varMiddleware = require(`./middleware/variables`);
+const userMiddleware = require(`./middleware/user`);
 
 const hbs = exphbs.create({
   defaultLayout: `main`,
@@ -44,6 +45,7 @@ app.use(session({
 }));
 
 app.use(varMiddleware);
+app.use(userMiddleware);
 
 app.use(`/`, mainRoute);
 app.use(`/courses`, coursesRoute);
