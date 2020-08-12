@@ -3,6 +3,8 @@ const router = Router();
 
 const Course = require(`../models/course`);
 
+const auth = require(`../middleware/auth`);
+
 const getCourses = (cart) => {
   return cart.items.map((it) => ({
     ...it.courseId._doc,
@@ -16,7 +18,7 @@ const getTotalPrice = (courses) => {
   }, 0);
 };
 
-router.get(`/`, async (req, res) => {
+router.get(`/`, auth, async (req, res) => {
   const user = await req.user.
     populate(`cart.items.courseId`).
     execPopulate();
@@ -32,13 +34,13 @@ router.get(`/`, async (req, res) => {
   });
 });
 
-router.post(`/add`, async (req, res) => {
+router.post(`/add`, auth, async (req, res) => {
   const course = await Course.findById(req.body._id);
   await req.user.addToCart(course);
   res.redirect(`/card`);
 });
 
-router.delete(`/remove/:id`, async (req, res) => {
+router.delete(`/remove/:id`, auth, async (req, res) => {
   await req.user.removeCartItems(req.params.id);
   const user = await req.user.populate(`cart.items.courseId`).execPopulate();
 

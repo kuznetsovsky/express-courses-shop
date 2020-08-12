@@ -3,7 +3,9 @@ const router = Router();
 
 const OrderModel = require(`../models/order`);
 
-router.get(`/`, async (req, res) => {
+const auth = require(`../middleware/auth`);
+
+router.get(`/`, auth, async (req, res) => {
   try {
     
     const orders = await OrderModel.
@@ -29,15 +31,7 @@ router.get(`/`, async (req, res) => {
   }
 });
 
-// orders: orders.map((it) => {
-//   return {
-//     ...it._doc,
-//     price: it.courses.reduce((total, items) => {
-//       return total =+ items.count * items.course.price; 
-//     }, 0),
-//   }
-// }),
-router.post(`/`, async (req, res) => {
+router.post(`/`, auth, async (req, res) => {
   try {
     const user = await req.user.populate(`cart.items.courseId`).execPopulate();
 
