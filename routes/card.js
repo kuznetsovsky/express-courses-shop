@@ -26,6 +26,7 @@ router.get(`/`, async (req, res) => {
 
   res.render(`card`, {
     title: `Basket of goods`,
+    isBasket: true,
     courses,
     totalPrice,
   });
