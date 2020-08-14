@@ -1,5 +1,3 @@
-const MONGODB_URI = `mongodb+srv://comebas:gLlBIWOQqHqHC770@cluster0.gl3ie.mongodb.net/courseshop`;
-
 const path = require(`path`);
 const mongoose = require('mongoose');
 const session = require(`express-session`);
@@ -20,6 +18,8 @@ const authRoute = require(`./routes/auth`);
 const varMiddleware = require(`./middleware/variables`);
 const userMiddleware = require(`./middleware/user`);
 
+const keys = require(`./keys`);
+
 const hbs = exphbs.create({
   defaultLayout: `main`,
   extname: `hbs`,
@@ -27,7 +27,7 @@ const hbs = exphbs.create({
 
 const store = new MongoStore({
   collection: `sessions`,
-  uri: MONGODB_URI,
+  uri: keys.MONGODB_URI,
 });
 
 app.engine(`hbs`, hbs.engine);
@@ -38,7 +38,7 @@ app.set(`views`, `views`);
 app.use(express.static(path.join(__dirname, `public`)));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  secret: `some secret value`,
+  secret: keys.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store,
@@ -59,7 +59,7 @@ app.use(`/auth`, authRoute);
 const start = async () => {
   try {
     const PORT = process.env.PORT || 3000;
-    mongoose.connect(MONGODB_URI, {
+    mongoose.connect(keys.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false
