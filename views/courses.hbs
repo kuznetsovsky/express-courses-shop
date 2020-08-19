@@ -15,16 +15,18 @@
           <a href="/courses/{{_id}}" target="__blank">Go to course page</a>
         </p>
         {{#if @root.isAuth}}
-        <p class="course-block-link">
-          <a class="orange-text" href="/courses/{{_id}}/edit?allow=true">Edit course</a>
-        </p>
-        <p class="course-block-link">
-          <form action="/card/add" method="POST">
-            <input type="hidden" name="_id" value="{{_id}}">
-            <input type="hidden" name="_csrf" value="{{@root.csrf}}">
-            <button type="submit" class="waves-effect waves-light btn-small">Add to card</button>
-          </form>
-        </p>
+          {{#ifeq userId._id @root.userId}}        
+            <p class="course-block-link">
+              <a class="orange-text" href="/courses/{{_id}}/edit?allow=true">Edit course</a>
+            </p>
+          {{/ifeq}}
+          <p class="course-block-link">
+            <form action="/card/add" method="POST">
+              <input type="hidden" name="_id" value="{{_id}}">
+              <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+              <button type="submit" class="waves-effect waves-light btn-small">Add to card</button>
+            </form>
+          </p>
         {{/if}}
       </div>
     </div>

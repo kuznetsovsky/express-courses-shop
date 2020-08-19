@@ -23,6 +23,7 @@ const keys = require(`./keys`);
 const hbs = exphbs.create({
   defaultLayout: `main`,
   extname: `hbs`,
+  helpers: require(`./utils/hbs-helpers`),
 });
 
 const store = new MongoStore({
