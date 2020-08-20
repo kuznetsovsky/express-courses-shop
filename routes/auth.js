@@ -1,10 +1,13 @@
 const crypto = require(`crypto`);
 const {Router} = require(`express`);
+const {validationResult} = require(`express-validator`);
 const bcrypt = require(`bcryptjs`);
 const nodemailer = require(`nodemailer`);
 const router = Router();
 
 const UserModel = require(`../models/user`);
+
+const {validatorRegister} = require(`../utils/validators`);
 
 const emailRegisterTemplate = require(`../email-templates/registration`);
 const resetPasswordTemplate = require(`../email-templates/reset`);
@@ -67,10 +70,16 @@ router.get(`/logout`, async (req, res) => {
 });
 
 
-router.post(`/register`, async (req, res) => {
+router.post(`/register`, validatorRegister, async (req, res) => {
   try {
-    const {email, password, repeat, name} = req.body;
+    const {email, password, confirm, name} = req.body;
     const candidate = await UserModel.findOne({email});
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      req.flash(`registerError`, errors.array()[0].msg);
+      return res.status(422).redirect(`/auth/login#register`);
+    }
 
     if (candidate) {
       req.flash(`registerError`, `User with this email already exists`);
