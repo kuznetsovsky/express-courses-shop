@@ -4,33 +4,25 @@
   <div class="col s6">
     <div class="row">
       <div class="col s12">
-        <div class="card">
-          <div class="card-image">
-            <img src="https://cdn-media-1.freecodecamp.org/images/0*xkJgg-6HskYrQ3N7.jpeg">
-          </div>
-          <div class="card-content">
-            <span class="card-title">Card Title</span>
-            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I
-              require little markup to use effectively.</p>
-          </div>
-        </div>
+        {{#if user.avatarUrl}}
+          <img 
+            class="responsive-img" 
+            src="/{{user.avatarUrl}}" 
+            alt="avatar-{{user.name}}"
+          >
+        {{else}}
+          <p class="card-content">No avatar</p>
+        {{/if}}
       </div>
     </div>
   </div>
 
   <div class="col s6">
-    <form action="/profile" method="POST">
+    <form action="/profile" method="POST" enctype="multipart/form-data">
       <p class="section">Your email: <strong class="right">{{user.email}}</strong></p>
 
       <div class="input-field">
-        <input 
-          id="name"
-          value="{{user.name}}" 
-          name="name" 
-          type="text" 
-          class="validate" 
-          required
-        >
+        <input id="name" value="{{user.name}}" name="name" type="text" class="validate" required>
         <label for="name">Username</label>
         <span class="helper-text" data-error="User name is not correct"></span>
       </div>
@@ -48,10 +40,7 @@
       <input type="hidden" name="_csrf" value="{{csrf}}">
 
       <p class="section">
-        <button 
-          class="btn green" 
-          type="submit" 
-        >Save changes</button>
+        <button class="btn green" type="submit">Save changes</button>
       </p>
 
     </form>
