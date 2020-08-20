@@ -14,13 +14,13 @@ exports.validatorRegister = [
       } catch (error) {
         console.log(error);
       }
-  }),
+  }).normalizeEmail(),
   
-  body(`password`, `Password must be at least 6 characters`).isLength({min: 6}),
-  body(`password`, `Password must not be more than 32 characters`).isLength({max: 32}),
-  body(`password`, `Password must be only letters and numbers`).isAlphanumeric(),
+  body(`password`, `Password must be at least 6 characters`).isLength({min: 6}).trim(),
+  body(`password`, `Password must not be more than 32 characters`).isLength({max: 32}).trim(),
+  body(`password`, `Password must be only letters and numbers`).isAlphanumeric().trim(),
   
-  body(`name`, `Name must be at least 3 characters`).isLength({min: 3}),
+  body(`name`, `Name must be at least 3 characters`).isLength({min: 3}).trim(),
   
   body(`confirm`).custom((value, {req}) => {
     if (value !== req.body.password) {
@@ -28,5 +28,5 @@ exports.validatorRegister = [
     } 
     
     return true;
-  }),
+  }).trim(),
 ];
