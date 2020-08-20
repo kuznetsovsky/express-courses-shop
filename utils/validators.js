@@ -1,5 +1,5 @@
 const {body} = require(`express-validator`);
-const UserModel =require(`../models/user`);
+const UserModel = require(`../models/user`);
 
 exports.validatorRegister = [
   body(`email`, `Please enter correct email`).isEmail().
@@ -29,4 +29,22 @@ exports.validatorRegister = [
     
     return true;
   }).trim(),
+];
+
+exports.validatorCourse = [
+  body(`course-name`, `The minimum length of the course name must be at least 3 characters`).
+    isLength({min: 3}).
+    trim(),
+  
+  body(`course-name`, `The maximum length of the course name must be no more than 32 characters.`).
+    isLength({max: 32}).
+    trim(),
+
+  body(`course-price`, `The price must be indicated in numbers only`).
+    isNumeric().
+    trim(),
+
+  body(`course-image-url`, `Enter the correct url of the picture`).
+    isURL().
+    trim(),
 ];
