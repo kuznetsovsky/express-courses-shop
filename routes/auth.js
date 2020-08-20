@@ -72,8 +72,7 @@ router.get(`/logout`, async (req, res) => {
 
 router.post(`/register`, validatorRegister, async (req, res) => {
   try {
-    const {email, password, confirm, name} = req.body;
-    const candidate = await UserModel.findOne({email});
+    const {email, password, name} = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -81,18 +80,16 @@ router.post(`/register`, validatorRegister, async (req, res) => {
       return res.status(422).redirect(`/auth/login#register`);
     }
 
-    if (candidate) {
-      req.flash(`registerError`, `User with this email already exists`);
-      res.redirect(`/auth/login#register`);
-    } else {
-      const hashPassword = await bcrypt.hash(password, 10);
-      const user = new UserModel({
-        email, name, password: hashPassword, cart: {items: []}
-      });
-      await user.save();
-      res.redirect(`/auth/login#login`);
-      await transporter.sendMail(emailRegisterTemplate(email));
-    }
+    const hashPassword = await bcrypt.hash(password, 10);
+    
+    const user = new UserModel({
+      email, name, password: hashPassword, cart: {items: []}
+    });
+    
+    await user.save();
+    res.redirect(`/auth/login#login`);
+    await transporter.sendMail(emailRegisterTemplate(email));
+
   } catch (error) {
     console.log(error);
   }

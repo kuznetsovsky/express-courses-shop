@@ -1,7 +1,20 @@
 const {body} = require(`express-validator`);
+const UserModel =require(`../models/user`);
 
 exports.validatorRegister = [
-  body(`email`, `Please enter correct email`).isEmail(),
+  body(`email`, `Please enter correct email`).isEmail().
+    custom(async (value, {req}) => {
+      try {
+        const user = await UserModel.findOne({email: value});
+
+        if (user) {
+          return Promise.reject(`User with this email already exists`) 
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+  }),
   
   body(`password`, `Password must be at least 6 characters`).isLength({min: 6}),
   body(`password`, `Password must not be more than 32 characters`).isLength({max: 32}),
