@@ -17,6 +17,7 @@ const authRoute = require(`./routes/auth`);
 
 const varMiddleware = require(`./middleware/variables`);
 const userMiddleware = require(`./middleware/user`);
+const errorMiddleware = require(`./middleware/error`);
 
 const keys = require(`./keys`);
 
@@ -56,6 +57,7 @@ app.use(`/add`, addRoute);
 app.use(`/card`, cardRoute);
 app.use(`/orders`, ordersRoute);
 app.use(`/auth`, authRoute);
+app.use(errorMiddleware);
 
 const start = async () => {
   try {
