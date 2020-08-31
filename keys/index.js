@@ -1,5 +1,5 @@
-module.exports = {
-  MONGODB_URI: `mongodb+srv://comebas:gLlBIWOQqHqHC770@cluster0.gl3ie.mongodb.net/courseshop`,
-  SESSION_SECRET: `some secret value`,
-  BASE_URL: `http://localhost:3000`,
-};
+if (process.env.NODE_ENV === `production`) {
+  module.exports = require(`./keys.prod`);
+} else {
+  module.exports = require(`./keys.dev`);
+}
