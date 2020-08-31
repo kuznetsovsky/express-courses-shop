@@ -7,6 +7,7 @@ const exphbs = require(`express-handlebars`);
 const csurf = require(`csurf`);
 const flash = require('connect-flash');
 const helmet = require(`helmet`);
+const compression = require(`compression`);
 const app = express();
 
 const mainRoute = require(`./routes/main`);
@@ -61,6 +62,7 @@ app.use(helmet.permittedCrossDomainPolicies());
 app.use(helmet.referrerPolicy());
 app.use(helmet.xssFilter());
 
+app.use(compression());
 app.use(fileMiddleware.single(`avatar`));
 app.use(csurf());
 app.use(flash());
